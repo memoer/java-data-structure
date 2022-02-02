@@ -2,6 +2,11 @@ package sort;
 
 import util.Algorithm;
 
+/**
+ * 1. 0~9 중 가장 작은 숫자 탐색 -> 해당 숫자를 0으로
+ * 2. 1~9 중 가장 작은 숫자 탐색 -> 해당 숫자를 1로
+ * 3. 2~9 중 가장 작은 숫자 탐색 -> 해당 숫자를 2로
+ */
 public class SelectSort {
   public static void main(String[] args) {
     Algorithm.job((dataList) -> {

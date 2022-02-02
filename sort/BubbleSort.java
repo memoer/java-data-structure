@@ -2,6 +2,11 @@ package sort;
 
 import util.Algorithm;
 
+/**
+ * 1. 0~9까지 2개의 숫자만 비교해서 큰 숫자롤 위로 올림 -> 가장 큰 숫자가 9에 위치함
+ * 2. 0~8까지 2개의 숫자만 비교해서 큰 숫자를 위로 올림 -> 가장 큰 숫자가 8에 위치함
+ * 3. 0~7까지 2개의 숫자만 비교해서 큰 숫자를 위로 올림 -> 가장 큰 숫자가 7에 위치함
+ */
 public class BubbleSort {
   public static void swap(boolean isAscending, int[] dataList, int i, int j) {
     int a = dataList[i];
