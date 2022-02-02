@@ -1,8 +1,8 @@
 package util;
 
 @FunctionalInterface
-public interface SortTemplate {
-  public void job(int[] dataList);
+public interface Job {
+  public void main(int[] dataList);
 
   public default void run() {
     this.run(RandomList.DEFAULT_LENGTH);
@@ -11,7 +11,7 @@ public interface SortTemplate {
   public default void run(int size) {
     int[] dataList = RandomList.get(size);
     Print.out(dataList);
-    job(dataList);
+    main(dataList);
     Print.out(dataList);
   }
 }

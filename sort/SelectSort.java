@@ -1,10 +1,10 @@
 package sort;
 
-import util.SortTemplate;
+import util.Algorithm;
 
 public class SelectSort {
   public static void main(String[] args) {
-    SortTemplate st = (dataList) -> {
+    Algorithm.job((dataList) -> {
       int length = dataList.length;
       for (int i = 0; i < length - 1; i++) {
         int temp = dataList[i];
@@ -20,7 +20,6 @@ public class SelectSort {
           dataList[target[1]] = temp;
         }
       }
-    };
-    st.run();
+    }).run();
   }
 }
