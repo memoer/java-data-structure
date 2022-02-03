@@ -1,88 +1,63 @@
-package structureNPattern.graph.panningTree;
+package graph.panningTree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Kruskal {
-  static class Edge {
-    int weight;
-    char v;
-    char u;
+  static private class Inner {
+    private Map<Character, Character> parent = new HashMap<>();
+    private Map<Character, Integer> rank = new HashMap<>();
+    private List<Edge> result = new ArrayList<>();
+    private Data data;
 
-    public Edge(int weight, char v, char u) {
-      this.weight = weight;
-      this.v = v;
-      this.u = u;
-    }
-
-    @Override
-    public String toString() {
-      return "(" + weight + ", " + v + ", " + u + ")";
-    }
-  }
-
-  private static final char[] vertices = { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-  private static final Edge[] edges = { new Edge(7, 'A', 'B'), new Edge(5, 'A', 'D'), new Edge(8, 'B', 'C'),
-      new Edge(9, 'B', 'D'), new Edge(7, 'B', 'E'), new Edge(5, 'C', 'E'), new Edge(8, 'E', 'F'), new Edge(9, 'E', 'G'),
-      new Edge(7, 'D', 'E'), new Edge(6, 'D', 'F'), new Edge(11, 'F', 'G'), };
-  private static final Map<Character, Integer> rank = new HashMap<>();
-  private static final Map<Character, Character> parent = new HashMap<>();
-  private static final List<Edge> result = new ArrayList<>();
-
-  private static void init() {
-    // ! 크루스칼은 가중치가 가장 작은 간선부터 시작한다.
-    Arrays.sort(edges, (pre, cur) -> pre.weight - cur.weight);
-    for (char v : vertices) {
-      rank.put(v, 0);
-      parent.put(v, v);
-    }
-  }
-
-  private static void union(char rootV, char rootU) {
-    int rankV = rank.get(rootV);
-    int rankU = rank.get(rootU);
-    if (rootV > rootU) {
-      parent.replace(rootU, rootV);
-    } else {
-      parent.replace(rootV, rootU);
-      if (rankV == rankU) {
-        rank.replace(rootU, rankU + 1);
+    public Inner(Data data) {
+      this.data = data;
+      data.sortEdgeList();
+      for (char v : data.getVertices()) {
+        parent.put(v, v);
+        rank.put(v, 0);
       }
     }
-  }
 
-  private static char findRoot(char node) {
-    char parentNode = parent.get(node);
-    if (node != parentNode) {
-      // path compression
-      parent.replace(node, findRoot(parentNode));
+    private char find(char node) {
+      if (parent.get(node) != node) {
+        parent.put(node, find(parent.get(node)));
+      }
+      return parent.get(node);
     }
-    return parent.get(node);
-  }
 
-  private static void print() {
-    for (Edge edge : result) {
-      System.out.println(edge);
-    }
-  }
-
-  public static void main(String[] args) throws Exception {
-    init();
-    for (Edge edge : edges) {
-      System.out.println(edge);
-      char nodeV = edge.v;
-      char nodeU = edge.u;
-      char rootV = findRoot(nodeV);
-      char rootU = findRoot(nodeU);
-      // System.out.println(rootV + ", " + rootU);
-      if (rootV != rootU) {
-        union(rootV, rootU);
-        result.add(edge);
+    private void union(char nodeA, char nodeB) {
+      char rootA = find(nodeA);
+      char rootB = find(nodeB);
+      if (rank.get(rootA) > rank.get(rootB)) {
+        parent.put(rootB, rootA);
+      } else {
+        parent.put(rootA, rootB);
+        if (rank.get(rootA) == rank.get(rootB)) {
+          rank.put(rootB, rank.get(rootB) + 1);
+        }
       }
     }
-    print();
+
+    public List<Edge> run() {
+      for (Edge edge : this.data.getEdgeList()) {
+        char nodeA = edge.me;
+        char nodeB = edge.adj;
+        if (find(nodeA) != find(nodeB)) {
+          union(nodeA, nodeB);
+          result.add(edge);
+        }
+      }
+      return result;
+    }
+  }
+
+  public static void main(String[] args) {
+    List<Edge> result = new Inner(new Data()).run();
+    for (Edge e : result) {
+      System.out.println(e);
+    }
   }
 }
