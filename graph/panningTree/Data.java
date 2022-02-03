@@ -1,14 +1,15 @@
 package graph.panningTree;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Data {
-  private char[] vertices;
+  private Set<Character> vertices;
   private Edge[] edgeList;
 
   public Data() {
-    this.vertices = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
-    this.edgeList = new Edge[] {
+    edgeList = new Edge[] {
         new Edge(7, 'A', 'B'),
         new Edge(5, 'A', 'D'),
         new Edge(7, 'B', 'A'),
@@ -32,18 +33,28 @@ public class Data {
         new Edge(9, 'G', 'E'),
         new Edge(11, 'G', 'F')
     };
+    initVertices();
   }
 
   public void sortEdgeList() {
     Arrays.sort(edgeList);
   }
 
-  public char[] getVertices() {
+  public Set<Character> getVertices() {
     return vertices;
   }
 
   public Edge[] getEdgeList() {
     return edgeList;
+  }
+
+  private void initVertices() {
+    Set<Character> s = new HashSet<>();
+    for (Edge e : edgeList) {
+      s.add(e.me);
+      s.add(e.adj);
+    }
+    vertices = s;
   }
 
 }

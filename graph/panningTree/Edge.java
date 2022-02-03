@@ -13,7 +13,7 @@ public class Edge implements Comparable<Edge> {
 
   @Override
   public String toString() {
-    return String.format("weight: %d, me: %c, adj: %c", weight, me, adj);
+    return String.format("(%d, %c, %c)", weight, me, adj);
   }
 
   @Override
