@@ -1,11 +1,11 @@
-package structureNPattern.greedy;
+package greedy;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Greedy_1 {
+public class G2 {
   public static void print(Map<Integer, Integer> map) {
     for (int key : map.keySet()) {
       System.out.println(key + ": " + map.get(key));
