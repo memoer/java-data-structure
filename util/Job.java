@@ -14,4 +14,5 @@ public interface Job {
     main(dataList);
     Print.out(dataList);
   }
+
 }
