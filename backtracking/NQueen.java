@@ -1,54 +1,49 @@
-package structureNPattern.backtracking;
+package backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
+import util.Print;
+
 public class NQueen {
-  private static List<List<Integer>> result = new ArrayList<>();
-  private static int BOARD_SIZE = 4;
+  public static List<int[]> result = new ArrayList<>();
 
-  private static List<Integer> deepCopy(List<Integer> list) {
-    List<Integer> c = new ArrayList<>();
-    for (int i : list) {
-      c.add(i);
-    }
-    return c;
-  }
-
-  private static boolean isAvailable(int curCol, List<Integer> candidate) {
-    int curRow = candidate.size();
-    for (int preRow = 0; preRow < curRow; preRow++) {
-      int preCol = candidate.get(preRow);
-      if (preCol == curCol || Math.abs(preCol - curCol) == curRow - preRow) {
+  public static boolean isAvailable(int targetRow, int targetCol, int[] candidate) {
+    for (int row = 0; row < targetRow; row++) {
+      int col = candidate[row];
+      int diffRow = Math.abs(targetRow - row);
+      int diffCol = Math.abs(targetCol - col);
+      if (targetCol == col || diffCol == diffRow) {
         return false;
       }
     }
     return true;
-  };
+  }
 
-  private static void backTracking(int row, List<Integer> candidate) {
-    if (row == BOARD_SIZE) {
-      List<Integer> c = deepCopy(candidate);
-      result.add(c);
+  public static void solveNQueens(int row, int n, int[] candidate) {
+    if (row == n) {
+      result.add(Arrays.copyOfRange(candidate, 0, n));
       return;
     }
-    for (int col = 0; col < BOARD_SIZE; col++) {
-      if (isAvailable(col, candidate)) {
-        candidate.add(col);
-        backTracking(row + 1, candidate);
-        candidate.remove(candidate.size() - 1);
+    for (int col = 0; col < n; col++) {
+      if (isAvailable(row, col, candidate)) {
+        candidate[row] = col;
+        solveNQueens(row + 1, n, candidate);
+        candidate[row] = 0;
       }
     }
   }
 
-  private static void print() {
-    for (List<Integer> d : result) {
-      System.out.println(d);
+  public static void main(String[] args) {
+    int n = 4;
+    solveNQueens(0, n, new int[n]);
+    for (int[] array : result) {
+      for (int num : array) {
+        System.out.print(num + " ");
+      }
+      System.out.println();
     }
-  }
-
-  public static void main(String[] args) throws Exception {
-    backTracking(0, new ArrayList<>());
-    print();
   }
 }
