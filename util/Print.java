@@ -13,10 +13,11 @@ public class Print {
     System.out.println();
   }
 
-  public static void out(List<Integer> dataList) {
-    for (int data : dataList) {
+  public static <T> void out(List<T> dataList) {
+    for (T data : dataList) {
       System.out.print(data + ", ");
     }
     System.out.println();
   }
+
 }
