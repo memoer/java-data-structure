@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.Stack;
 
-import util.Graph;
 import util.Print;
 
 // DFS는 Stack 을 사용
@@ -37,7 +36,7 @@ public class DFS {
   }
 
   public static void main(String[] args) {
-    Map<Character, char[]> graph = new Graph().getGraph();
+    Map<Character, char[]> graph = new Data().getGraph();
     dfs(graph, 'A');
   }
 }

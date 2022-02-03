@@ -1,6 +1,7 @@
 package util;
 
 import java.util.List;
+import java.util.Map;
 
 public class Print {
   private Print() {
@@ -18,6 +19,13 @@ public class Print {
       System.out.print(data + ", ");
     }
     System.out.println();
+  }
+
+  public static <T, S> void out(Map<T, S> map) {
+    for (T key : map.keySet()) {
+      System.out.print("key -> " + key + " / " + "value -> " + map.get(key));
+      System.out.println();
+    }
   }
 
 }

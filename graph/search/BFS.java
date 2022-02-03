@@ -1,14 +1,11 @@
 package graph.search;
 
-import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import util.Graph;
 import util.Print;
 
 // BFS는 Queue 을 사용함
@@ -38,7 +35,7 @@ public class BFS {
   }
 
   public static void main(String[] args) throws Exception {
-    Map<Character, char[]> graph = new Graph().getGraph();
+    Map<Character, char[]> graph = new Data().getGraph();
     bfs(graph, 'A');
   }
 }

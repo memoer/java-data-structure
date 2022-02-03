@@ -1,12 +1,12 @@
-package util;
+package graph.search;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Graph {
+public class Data {
   private Map<Character, char[]> graph = new HashMap<>();
 
-  public Graph() {
+  public Data() {
     graph.put('A', new char[] { 'B', 'C' });
     graph.put('B', new char[] { 'D' });
     graph.put('D', new char[] { 'E', 'F' });
