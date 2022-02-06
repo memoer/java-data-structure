@@ -2,15 +2,13 @@ package search;
 
 import java.util.Arrays;
 
-import util.RandomList;
-
 public class BinarySearch {
   public static int search(int[] dataList, int search) {
     int findIdx = -1;
     int start = 0;
-    int end = dataList.length;
+    int end = dataList.length - 1;
     Arrays.sort(dataList);
-    while (start < end) {
+    while (start <= end) {
       int mid = (start + end) / 2;
       if (search < dataList[mid]) {
         end = mid - 1;
