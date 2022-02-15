@@ -6,35 +6,34 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-public class Prim {
-  public static final char START_NODE = 'A';
-
+public class Prim2 {
   public static void main(String[] args) {
+    final char START_NODE = 'A';
     Data data = new Data();
-    PriorityQueue<Edge> pq = new PriorityQueue<>();
-    Set<Character> visitedNodeSet = new HashSet<>();
+    Set<Character> visited = new HashSet<>();
     List<Edge> result = new ArrayList<>();
+    PriorityQueue<Edge> pq = new PriorityQueue<>();
 
-    visitedNodeSet.add(START_NODE);
+    visited.add(START_NODE);
     for (Edge edge : data.getEdgeList()) {
       if (edge.me == START_NODE) {
-        pq.add(edge);
+        pq.offer(edge);
       }
     }
 
     while (!pq.isEmpty()) {
-      Edge polledEdge = pq.poll();
-      if (visitedNodeSet.contains(polledEdge.adj)) {
+      Edge curEdge = pq.poll();
+      if (visited.contains(curEdge.adj)) {
         continue;
       }
-      visitedNodeSet.add(polledEdge.adj);
-      result.add(polledEdge);
-      for (Edge edge : data.getEdgeList()) {
-        if (visitedNodeSet.contains(edge.adj)) {
+      visited.add(curEdge.adj);
+      result.add(curEdge);
+      for (Edge adjEdge : data.getEdgeList()) {
+        if (visited.contains(adjEdge.adj)) {
           continue;
         }
-        if (edge.me == polledEdge.adj) {
-          pq.add(edge);
+        if (curEdge.adj == adjEdge.me) {
+          pq.offer(adjEdge);
         }
       }
     }
