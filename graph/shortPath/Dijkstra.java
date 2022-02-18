@@ -1,10 +1,12 @@
 package graph.shortPath;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import util.Print;
 
@@ -31,20 +33,27 @@ public class Dijkstra {
 
   public static void main(String[] args) {
     Map<Character, List<Node>> graph = new Data().getGraph();
-    Map<Character, Integer> weightMap = getWeightMap(graph.keySet());
+    Map<Character, Integer> path = getWeightMap(graph.keySet());
     PriorityQueue<Node> pq = getQueue(graph);
     while (!pq.isEmpty()) {
+      for (Entry<Character, Integer> v : path.entrySet()) {
+        System.out.print("(" + v.getKey() + ", " + v.getValue() + "), ");
+      }
+      System.out.println();
+      for (Object node : pq.stream().sorted((pre, cur) -> pre.weight - cur.weight).toArray()) {
+        System.out.print(node + ", ");
+      }
+      System.out.println();
+      System.out.println("------");
       char curName = pq.remove().name;
-      for (Node adjacentNode : graph.get(curName)) {
-        char adjName = adjacentNode.name;
-        int sumWeight = weightMap.get(curName) + adjacentNode.weight;
-        if (sumWeight < weightMap.get(adjName)) {
-          pq.add(adjacentNode);
-          weightMap.put(adjName, sumWeight);
+      for (Node adjNode : graph.get(curName)) {
+        int sum = path.get(curName) + adjNode.weight;
+        if (sum < path.get(adjNode.name)) {
+          pq.add(new Node(adjNode.name, sum));
+          path.put(adjNode.name, sum);
         }
       }
     }
-
-    Print.out(weightMap);
+    Print.out(path);
   }
 }

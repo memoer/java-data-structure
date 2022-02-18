@@ -16,6 +16,6 @@ public class Node implements Comparable<Node> {
 
   @Override
   public String toString() {
-    return "name: " + name + ", weight: " + weight;
+    return "(name: " + name + ", weight: " + weight + ")";
   }
 }
