@@ -45,12 +45,12 @@ public class Dijkstra {
       }
       System.out.println();
       System.out.println("------");
-      char curName = pq.remove().name;
-      for (Node adjNode : graph.get(curName)) {
-        int sum = path.get(curName) + adjNode.weight;
+      Node cur = pq.poll();
+      for (Node adjNode : graph.get(cur.name)) {
+        int sum = cur.weight + adjNode.weight;
         if (sum < path.get(adjNode.name)) {
-          pq.add(new Node(adjNode.name, sum));
           path.put(adjNode.name, sum);
+          pq.add(new Node(adjNode.name, sum));
         }
       }
     }
