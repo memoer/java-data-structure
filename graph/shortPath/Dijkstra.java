@@ -38,11 +38,11 @@ public class Dijkstra {
       if (distances.get(cur.name) < cur.weight) {
         continue;
       }
-      for (Node adjNode : graph.get(cur.name)) {
-        int sum = cur.weight + adjNode.weight;
-        if (sum < distances.get(adjNode.name)) {
-          distances.put(adjNode.name, sum);
-          pq.add(new Node(adjNode.name, sum));
+      for (Node adj : graph.get(cur.name)) {
+        int sum = cur.weight + adj.weight;
+        if (sum < distances.get(adj.name)) {
+          distances.put(adj.name, sum);
+          pq.add(new Node(adj.name, sum));
         }
       }
     }
