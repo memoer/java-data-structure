@@ -9,31 +9,33 @@ import java.util.Set;
 public class Prim3 {
   public static void main(String[] args) {
     final char START_NODE = 'A';
-    PriorityQueue<Edge> pq = new PriorityQueue<>();
     Set<Character> visited = new HashSet<>();
+    PriorityQueue<Edge> pq = new PriorityQueue<>();
     List<Edge> result = new ArrayList<>();
     Data data = new Data();
 
-    for (Edge edge : data.getEdgeList()) {
-      if (edge.me != START_NODE) {
-        continue;
-      }
-      pq.offer(edge);
-    }
     visited.add(START_NODE);
-
-    while (!pq.isEmpty()) {
-      Edge cur = pq.poll();
-      result.add(cur);
-      visited.add(cur.adj);
-      for (Edge edge : data.getEdgeList()) {
-        if (edge.me != cur.adj) {
-          continue;
-        }
+    for (Edge edge : data.getEdgeList()) {
+      if (edge.me == START_NODE) {
         pq.offer(edge);
       }
     }
-
+    while (!pq.isEmpty()) {
+      Edge cur = pq.poll();
+      if (visited.contains(cur.adj)) {
+        continue;
+      }
+      visited.add(cur.adj);
+      result.add(cur);
+      for (Edge edge : data.getEdgeList()) {
+        if (visited.contains(edge.adj)) {
+          continue;
+        }
+        if (cur.adj == edge.me) {
+          pq.offer(edge);
+        }
+      }
+    }
     for (Edge edge : result) {
       System.out.println(edge);
     }

@@ -9,27 +9,27 @@ public class Kruskal3 {
   private static Map<Character, Character> parent = new HashMap<>();
   private static Map<Character, Integer> rank = new HashMap<>();
 
-  private static char find(char u) {
-    if (parent.get(u) != u) {
-      parent.put(u, find(parent.get(u)));
+  private static char find(char a) {
+    if (a != parent.get(a)) {
+      parent.put(a, find(parent.get(a)));
     }
-    return parent.get(u);
+    return parent.get(a);
   }
 
-  private static void union(char u, char v) {
-    char rootU = find(u);
-    char rootV = find(v);
-    if (rootU == rootV) {
+  private static void union(char a, char b) {
+    char rootA = find(a);
+    char rootB = find(b);
+    if (rootA == rootB) {
       return;
     }
-    int rankU = rank.get(u);
-    int rankV = rank.get(v);
-    if (rankU > rankV) {
-      parent.put(rootV, rootU);
+    int rankA = rank.get(rootA);
+    int rankB = rank.get(rootB);
+    if (rankA > rankB) {
+      parent.put(rootB, rootA);
     } else {
-      parent.put(rootU, rootV);
-      if (rankU == rankV) {
-        rank.put(rootV, rankV + 1);
+      parent.put(rootA, rootB);
+      if (rankA == rankB) {
+        rank.put(rootB, rankB + 1);
       }
     }
   }
@@ -38,20 +38,16 @@ public class Kruskal3 {
     Data data = new Data();
     List<Edge> result = new ArrayList<>();
     data.sortEdgeList();
-
     for (char v : data.getVertices()) {
       parent.put(v, v);
       rank.put(v, 0);
     }
     for (Edge edge : data.getEdgeList()) {
-      char u = edge.me;
-      char v = edge.adj;
-      if (find(u) != find(v)) {
-        union(u, v);
+      if (find(edge.me) != find(edge.adj)) {
+        union(edge.me, edge.adj);
         result.add(edge);
       }
     }
-
     for (Edge edge : result) {
       System.out.println(edge);
     }
