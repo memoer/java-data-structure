@@ -13,6 +13,7 @@ public class BFS2 {
   public static void main(String[] args) {
     final char START_cur = 'A';
     Map<Character, char[]> map = new Data().getGraph();
+
     Queue<Character> q = new LinkedList<>();
     List<Character> visited = new ArrayList<>();
     q.offer(START_cur);
